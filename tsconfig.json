@@ -10,10 +10,14 @@
         "baseUrl": ".",
         "paths": {
             "*": ["./src/*"],
-            "shared/*": ["shared/*"]
+            "shared/*": ["./src/shared/*"],
+            "widgets/*": ["./src/widgets/*"],
+            "features/*": ["./src/features/*"],
+            "entities/*": ["./src/entities/*"]
         },
         "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "types": ["node"]
     },
     "ts-node": {
         "compilerOptions": {
