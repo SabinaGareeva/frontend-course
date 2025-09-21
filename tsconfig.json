@@ -11,6 +11,7 @@
     "jsx": "react-jsx",
     // Компилятор будет обрабатывать не только TS файлы, но и JS файлы
     "allowJs": true,
+    "strict": true,
     "moduleResolution": "node",
     // Для абсолютного импорта
     "baseUrl": ".",
@@ -41,6 +42,6 @@
   "include": [
     "./config/jest/setupTests.ts",
     "./src/**/*.ts",
-    "./src/**/*.tsx",
+    "./src/**/*.tsx", "src/entities/User/model/selectors/getUserInited",
   ]
 }
