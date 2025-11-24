@@ -1,142 +1,30 @@
-import {
-    fetchProfileData,
-    getProfileData,
-    getProfileError,
-    getProfileForm,
-    getProfileIsLoading,
-    getProfileReadonly,
-    getProfileValidateErrors,
-    profileActions,
-    ProfileCard,
-    profileReducer,
-    ValidateProfileError,
-} from 'entities/Profile';
-import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { classNames } from 'shared/lib/classNames/classNames';
-import {
-    DynamicModuleLoader,
-    ReducersList,
-} from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
-import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
-import { Currency } from 'entities/Currency';
-import { Country } from 'entities/Country';
-import { Text, TextTheme } from 'shared/ui/Text/Text';
-import { useInitialEffect } from 'shared/lib/hooks/useInitialEffect/useInitialEffect';
-import { useParams } from 'react-router-dom';
-import { ProfilePageHeader } from './ProfilePageHeader/ProfilePageHeader';
-import { Page } from 'shared/ui/Page/Page';
 
-const reducers: ReducersList = {
-    profile: profileReducer,
-};
+import { classNames } from 'shared/lib/classNames/classNames';
+
+import { Text } from 'shared/ui/Text/Text';
+
+import { useParams } from 'react-router-dom';
+import { Page } from 'widgets/Page/Page';
+import { VStack } from 'shared/ui/Stack/VStack/VStack';
+import { EditableProfileCard } from 'features/editableProfileCard';
+
 interface ProfilePageProps {
     className?: string;
 }
 
 const ProfilePage = ({ className }: ProfilePageProps) => {
-    const { t } = useTranslation('profile');
-    const dispatch = useAppDispatch();
-    const formData = useSelector(getProfileForm);
-    const isLoading = useSelector(getProfileIsLoading);
-    const error = useSelector(getProfileError);
-    const readonly = useSelector(getProfileReadonly);
-    const validateErrors = useSelector(getProfileValidateErrors);
     const { id } = useParams<{ id: string }>();
-    const validateErrorTranslates = {
-        [ValidateProfileError.SERVER_ERROR]: t(
-            'Серверная ошибка при сохранении'
-        ),
-        [ValidateProfileError.INCORRECT_COUNTRY]: t('Некорректный регион'),
-        [ValidateProfileError.NO_DATA]: t('Данные не указаны'),
-        [ValidateProfileError.INCORRECT_USER_DATA]: t(
-            'Имя и фамилия обязательны'
-        ),
-        [ValidateProfileError.INCORRECT_AGE]: t('Некорректный возраст'),
-    };
-    useInitialEffect(() => {
-        if (id) {
-            dispatch(fetchProfileData(id));
-        }
-    });
-
-    const onChageFirstname = useCallback(
-        (value?: string) => {
-            dispatch(profileActions.updateProfile({ first: value || '' }));
-        },
-        [dispatch]
-    );
-    const onChageLastname = useCallback(
-        (value?: string) => {
-            dispatch(profileActions.updateProfile({ lastname: value || '' }));
-        },
-        [dispatch]
-    );
-    const onChageCity = useCallback(
-        (value?: string) => {
-            dispatch(profileActions.updateProfile({ city: value || '' }));
-        },
-        [dispatch]
-    );
-    const onChageAge = useCallback(
-        (value?: string) => {
-            dispatch(profileActions.updateProfile({ age: Number(value) || 0 }));
-        },
-        [dispatch]
-    );
-    const onChageUsername = useCallback(
-        (value?: string) => {
-            dispatch(profileActions.updateProfile({ username: value || '' }));
-        },
-        [dispatch]
-    );
-    const onChageAvatar = useCallback(
-        (value?: string) => {
-            dispatch(profileActions.updateProfile({ avatar: value || '' }));
-        },
-        [dispatch]
-    );
-    const onChangeCurrency = useCallback(
-        (currency: Currency) => {
-            dispatch(profileActions.updateProfile({ currency }));
-        },
-        [dispatch]
-    );
-    const onChangeCountry = useCallback(
-        (country: Country) => {
-            dispatch(profileActions.updateProfile({ country }));
-        },
-        [dispatch]
-    );
+    const { t } = useTranslation('profile');
+    if (!id) {
+        return <Text text={t('Профиль не найдет')} />;
+    }
     return (
-        <DynamicModuleLoader reducers={reducers} removeAfterUnmount>
-            <Page className={classNames('', {}, [className])}>
-                <ProfilePageHeader />
-                {validateErrors?.length &&
-                    validateErrors.map(err => (
-                        <Text
-                            theme={TextTheme.ERROR}
-                            text={validateErrorTranslates[err]}
-                            key={err}
-                        />
-                    ))}
-                <ProfileCard
-                    data={formData}
-                    isLoading={isLoading}
-                    error={error}
-                    readonly={readonly}
-                    onChageFirstname={onChageFirstname}
-                    onChageLastname={onChageLastname}
-                    onChageAge={onChageAge}
-                    onChageCity={onChageCity}
-                    onChageUsername={onChageUsername}
-                    onChageAvatar={onChageAvatar}
-                    onChangeCurrency={onChangeCurrency}
-                    onChangeCountry={onChangeCountry}
-                />
-            </Page>
-        </DynamicModuleLoader>
+        <Page className={classNames('', {}, [className])}>
+            <VStack gap="16" max>
+                <EditableProfileCard id={id} />
+            </VStack>
+        </Page>
     );
 };
 export default ProfilePage;

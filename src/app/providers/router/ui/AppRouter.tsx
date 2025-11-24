@@ -5,15 +5,13 @@ import {
     AppRoutesProps,
     routeConfig,
 } from 'shared/config/routeConfig/routeConfig';
-import { PageLoader } from 'shared/ui/PageLoader/PageLoader';
+import { PageLoader } from 'widgets/PageLoader/PageLoader';
 import { RequireAuth } from './RequareAuth';
 
 const AppRouter = () => {
     const renderWithWrapper = useCallback((route: AppRoutesProps) => {
         const element = (
-            <Suspense fallback={<PageLoader />}>
-                {route.element}
-            </Suspense>
+            <Suspense fallback={<PageLoader />}>{route.element}</Suspense>
         );
         return (
             <Route

@@ -4,7 +4,7 @@ import {
     Article,
     ArticleBlockType,
     ArticleType,
-} from 'entities/Article/model/types/article';
+} from '../../model/types/article';
 import { ArticleDetails } from './ArticleDetails';
 
 export default {

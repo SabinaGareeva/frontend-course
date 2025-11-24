@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { Article, ArticleView } from 'entities/Article/model/types/article';
+import { Article, ArticleView } from '../../model/types/article';
 import { ArticleListItem } from './ArticleListItem';
 
 export default {
@@ -10,7 +10,7 @@ export default {
     },
 } as ComponentMeta<typeof ArticleListItem>;
 
-const Template: ComponentStory<typeof ArticleListItem> = args => (
+const Template: ComponentStory<typeof ArticleListItem> = (args) => (
     <ArticleListItem {...args} />
 );
 const article = {
