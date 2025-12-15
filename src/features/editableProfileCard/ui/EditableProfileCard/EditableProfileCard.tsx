@@ -1,20 +1,20 @@
-import { classNames } from 'shared/lib/classNames/classNames';
 import { useTranslation } from 'react-i18next';
 import { memo, useCallback } from 'react';
-import { Country } from 'entities/Country';
-import { Currency } from 'entities/Currency';
-
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
-import { useInitialEffect } from 'shared/lib/hooks/useInitialEffect/useInitialEffect';
-import { TextTheme, Text } from 'shared/ui/Text/Text';
-import { ProfileCard } from 'entities/Profile';
+import { Country } from '@/entities/Country';
+import { Currency } from '@/entities/Currency';
+
+import { classNames } from '@/shared/lib/classNames/classNames';
+import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { useInitialEffect } from '@/shared/lib/hooks/useInitialEffect/useInitialEffect';
+import { TextTheme, Text } from '@/shared/ui/Text/Text';
+import { ProfileCard } from '@/entities/Profile';
 import {
     DynamicModuleLoader,
     ReducersList,
-} from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
-import { VStack } from 'shared/ui/Stack';
+} from '@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
+import { VStack } from '@/shared/ui/Stack';
 import { getProfileForm } from '../../model/selectors/getProfileForm/getProfileForm';
 import { getProfileIsLoading } from '../../model/selectors/getProfileIsLoading/getProfileIsLoading';
 import { getProfileError } from '../../model/selectors/getProfileError/getProfileError';
@@ -22,12 +22,12 @@ import { getProfileReadonly } from '../../model/selectors/getProfileReadonly/get
 import { getProfileValidateErrors } from '../../model/selectors/getProfileValidateErrors/getProfileValidateErrors';
 import { fetchProfileData } from '../../model/services/fetchProfileData/fetchProfileData';
 import { profileActions, profileReducer } from '../../model/slice/profileSlice';
-import { ValidateProfileError } from '../../model/types/editableProfileCardSchema';
 import { EditableProfileCardHeader } from '../EditableProfileCardHeader/EditableProfileCardHeader';
+import { ValidateProfileError } from '../../model/consts/consts';
 
 interface EditableProfileCardProps {
     className?: string;
-    id: string;
+    id?: string;
 }
 
 const reducers: ReducersList = {
@@ -112,11 +112,7 @@ export const EditableProfileCard = memo((props: EditableProfileCardProps) => {
 
     return (
         <DynamicModuleLoader reducers={reducers}>
-            <VStack
-                gap="8"
-                max
-                className={classNames('', {}, [className])}
-            >
+            <VStack gap="8" max className={classNames('', {}, [className])}>
                 <EditableProfileCardHeader />
                 {validateErrors?.length
                     && validateErrors.map((err) => (
@@ -124,6 +120,7 @@ export const EditableProfileCard = memo((props: EditableProfileCardProps) => {
                             theme={TextTheme.ERROR}
                             text={validateErrorTranslates[err]}
                             key={err}
+                            data-testid="EditableProfileCard.Error"
                         />
                     ))}
                 <ProfileCard

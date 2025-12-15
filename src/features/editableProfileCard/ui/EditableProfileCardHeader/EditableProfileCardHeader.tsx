@@ -1,13 +1,13 @@
-import { classNames } from 'shared/lib/classNames/classNames';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonTheme } from 'shared/ui/Button/Button';
-import { Text } from 'shared/ui/Text/Text';
 import { useSelector } from 'react-redux';
-
-import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { useCallback } from 'react';
-import { getUserAuthData } from 'entities/User';
-import { HStack } from 'shared/ui/Stack/HStack/HStack';
+import { classNames } from '@/shared/lib/classNames/classNames';
+import { Button, ButtonTheme } from '@/shared/ui/Button/Button';
+import { Text } from '@/shared/ui/Text/Text';
+
+import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { getUserAuthData } from '@/entities/User';
+import { HStack } from '@/shared/ui/Stack/HStack/HStack';
 import { getProfileData } from '../../model/selectors/getProfileData/getProfileData';
 import { getProfileReadonly } from '../../model/selectors/getProfileReadonly/getProfileReadonly';
 import { updateProfileData } from '../../model/services/updateProfileData/updateProfileData';
@@ -17,7 +17,9 @@ interface ProfilePageHeaderProps {
     className?: string;
 }
 
-export const EditableProfileCardHeader = ({ className }: ProfilePageHeaderProps) => {
+export const EditableProfileCardHeader = ({
+    className,
+}: ProfilePageHeaderProps) => {
     const { t } = useTranslation('profile');
     const authData = useSelector(getUserAuthData);
     const profileData = useSelector(getProfileData);
@@ -34,12 +36,20 @@ export const EditableProfileCardHeader = ({ className }: ProfilePageHeaderProps)
         dispatch(updateProfileData());
     }, [dispatch]);
     return (
-        <HStack max justify="between" className={classNames('', {}, [className])}>
+        <HStack
+            max
+            justify="between"
+            className={classNames('', {}, [className])}
+        >
             <Text title={t('Профиль')} />
             {canEdit && (
                 <div>
                     {readonly ? (
-                        <Button theme={ButtonTheme.OUTLINE} onClick={onEdit}>
+                        <Button
+                            theme={ButtonTheme.OUTLINE}
+                            onClick={onEdit}
+                            data-testid="EditableProfileCardHeader.EditButton"
+                        >
                             {t('Редактировать')}
                         </Button>
                     ) : (
@@ -47,12 +57,14 @@ export const EditableProfileCardHeader = ({ className }: ProfilePageHeaderProps)
                             <Button
                                 theme={ButtonTheme.OUTLINE_RED}
                                 onClick={onCancelEdit}
+                                data-testid="EditableProfileCardHeader.CancelButton"
                             >
                                 {t('Отменить')}
                             </Button>
                             <Button
                                 theme={ButtonTheme.OUTLINE}
                                 onClick={onSave}
+                                data-testid="EditableProfileCardHeader.SaveButton"
                             >
                                 {t('Сохранить')}
                             </Button>
