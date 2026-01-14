@@ -4,7 +4,6 @@ import {
     Reducer,
     ReducersMapObject,
     CombinedState,
-    Dispatch,
 } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { ArticleDetailsSchema } from '@/entities/Article';

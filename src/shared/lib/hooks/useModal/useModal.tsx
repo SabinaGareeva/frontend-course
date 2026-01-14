@@ -9,16 +9,16 @@ import {
 interface UseModalProps {
     onClose?: () => void;
     isOpen?: boolean;
-    lazy?: boolean;
     animationDelay: number;
 }
-
-export function useModal({
-    animationDelay,
-    isOpen,
-    onClose,
-    lazy,
-}: UseModalProps) {
+/**
+ * Переиспользуемый хук для модальных компонентов (drawer/modal)
+ * @param animationDelay
+ * @param isOpen
+ * @param onClose
+ * @returns
+ */
+export function useModal({ animationDelay, isOpen, onClose }: UseModalProps) {
     const [isClosing, setIsClosing] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
     const timerRef = useRef() as MutableRefObject<

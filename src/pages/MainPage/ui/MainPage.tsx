@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Input } from '@/shared/ui/Input/Input';
-import { ListBox } from '@/shared/ui/Popups/components/ListBox/ListBox';
-import { HStack } from '@/shared/ui/Stack';
-import { Page } from '@/widgets/Page/Page';
+
+import { Page } from '@/widgets/Page';
+import { Counter } from '@/entities/Counter';
 
 const MainPage = () => {
     const { t } = useTranslation();
@@ -14,7 +13,8 @@ const MainPage = () => {
     };
 
     return (
-        <Page>
+        <Page data-testid="MainPage">
+            <Counter />
             <div />
         </Page>
     );
