@@ -61,9 +61,9 @@ jobs:
       matrix:
         node-version: [ 17.x ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Staring Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - name: install modules
@@ -81,17 +81,17 @@ jobs:
         run: npm run test:ui:report
         if: always()
       - name: Setup Pages
-        uses: actions/configure-pages@v2
+        uses: actions/configure-pages@v4
         if: always()
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         if: always()
         with:
           path: '.loki'
       - name: Deploy to GitHub Pages
         id: deployment
         if: always()
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
 
   checks:
     runs-on: ubuntu-latest
@@ -99,9 +99,9 @@ jobs:
       matrix:
         node-version: [ 17.x ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Staring Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - name: install modules
